@@ -121,6 +121,16 @@ namespace QTodoSpecs
             action.Should().Throw<Exception>();
         }
 
+        [Fact]
+        public void ShouldAcceptDeleteEvents()
+        {
+            var todoList = new TodoList();
+            todoList.Apply(defaultTasks);
+            var action = () => todoList.Apply(new ITodoEvent[] { new DeleteTodoEvent() });
+
+            action.Should().NotThrow();
+        }
+
         private IEnumerable<UpdateTodoEvent> GetDefaultUpdateEvents(IEnumerable<Guid> itemGuids)
         {
             return itemGuids
